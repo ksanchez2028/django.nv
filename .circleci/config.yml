@@ -10,7 +10,7 @@ jobs:
 
   test:
     needs:
-     - build
+      - build
     docker:
       - image: python:3.6
     steps:
@@ -20,8 +20,8 @@ jobs:
           python manage.py test taskManager
 
   integration:
-      needs:
-     - test
+    needs:
+      - test
     docker:
       - image: python:3.6
     steps:
@@ -29,11 +29,11 @@ jobs:
       - run:
           command: |
             echo "This is an integration step"
-            exit 1
+            exit 0
 
   prod:
-      needs:
-     - integration
+    needs:
+      - integration
     docker:
       - image: python:3.6
     steps:
