@@ -21,7 +21,7 @@ jobs:
     machine: true                                        # What is this for?
     steps:
       - checkout
-
+      - run: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
       - run: |
           docker build -t $DOCKER_USERNAME/django.nv .   # Build the application into Docker image
           docker push $DOCKER_USERNAME/django.nv         # Push the image into registry
@@ -35,7 +35,7 @@ jobs:
           command: |
             echo "This is an integration step"
             exit 1
-          when: always                    # Even if the job fails, continue to the next stages
+          when: on_fail      # Even if the job fails, continue to the next jobss
 
   prod:
     docker:
