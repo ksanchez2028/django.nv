@@ -9,7 +9,8 @@ jobs:
           python manage.py check
 
   test:
-    needs:[build]
+    needs:
+      - build
     docker:
       - image: python:3.6
     steps:
@@ -19,6 +20,8 @@ jobs:
           python manage.py test taskManager
 
   integration:
+    needs:
+      - test
     docker:
       - image: python:3.6
     steps:
@@ -27,13 +30,27 @@ jobs:
           command: |
             echo "This is an integration step"
             exit 1
+    allow_failure: true
 
   prod:
+    needs:
+      - integration
     docker:
       - image: python:3.6
     steps:
       - checkout
       - run: echo "This is a deploy step"
+
+  artifact:
+    docker:
+      - image: python:3.6
+    steps:
+      - checkout
+      - run: |
+          echo "hello" > hello.txt
+    outputs:
+      - name: artifact
+        path: hello.txt
 
 workflows:
   version: 2
@@ -43,3 +60,8 @@ workflows:
       - test
       - integration
       - prod
+      - artifact
+    on:
+      push:
+        branches:
+          - main
