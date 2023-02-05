@@ -9,8 +9,7 @@ jobs:
           python manage.py check
 
   test:
-    needs:
-      - build
+    
     docker:
       - image: python:3.6
     steps:
@@ -20,8 +19,7 @@ jobs:
           python manage.py test taskManager
 
   integration:
-    needs:
-      - test
+ 
     docker:
       - image: python:3.6
     steps:
@@ -33,8 +31,7 @@ jobs:
     allow_failure: true
 
   prod:
-    needs:
-      - integration
+
     docker:
       - image: python:3.6
     steps:
