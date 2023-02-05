@@ -39,6 +39,17 @@ jobs:
     steps:
       - checkout
       - run: echo "This is a deploy step"
+      
+  artifact:
+    docker:
+      - image: python:3.6
+    steps:
+      - checkout
+      - run: |
+          echo "hello" > hello.txt
+    outputs:
+      - name: artifact
+        path: hello.txt
 
 workflows:
   version: 2
