@@ -22,7 +22,7 @@ jobs:
     needs: test
     steps:
       - run: echo "This is an integration step"
-      - run: exit 1
+  
 
   prod:
     runs-on: ubuntu-20.04
