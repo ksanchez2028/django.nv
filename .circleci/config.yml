@@ -51,10 +51,13 @@ workflows:
       - build
       - test:
           requires:
-            - build 
-      - integration:
+            - build
+      - oast: 
           requires:
             - test
+      - integration:
+          requires:
+            - oast
       - prod:
           type: approval
           requires:
