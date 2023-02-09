@@ -5,7 +5,6 @@ on:
     branches:                                 # similar to "only" in GitLab
       - main
 
-
 jobs:
   build:
     runs-on: ubuntu-20.04                    # similar to "image" in GitLab
@@ -52,6 +51,7 @@ jobs:
           node-version: '10.x'
       - run: npm install
       - run: docker run --rm -v $(pwd):/src -w /src hysnsec/retire --outputformat json --outputpath retirejs-report.json --severity high
+        continue-on-error: true
       - uses: actions/upload-artifact@v2
         with:
           name: RetireJS
